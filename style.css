@@ -4,14 +4,21 @@
   charity: water inspired palette: yellow, dark navy/black, white, and light blue.
 */
 :root {
-  --charity-yellow: #ffc907;
+  --charity-yellow: #FFC907;
+  --charity-blue: #2E9DF7;
+  --charity-light-blue: #8BD1CB;
+  --charity-green: #4FCB53;
+  --charity-orange: #FF902A;
+  --charity-red: #F5402C;
+  --charity-dark-green: #159A48;
+  --charity-pink: #F16061;
   --dark-navy: #111827;
   --white: #ffffff;
-  --light-blue: #8bd3ff;
-  --clean-blue: #1ca3ec;
+  --light-blue: var(--charity-light-blue);
+  --clean-blue: var(--charity-blue);
   --dirty-brown: #8b6f47;
   --soft-gray: #f3f4f6;
-  --green: #35a853;
+  --green: var(--charity-green);
 }
 
 * {
@@ -57,6 +64,14 @@ body {
   font-weight: bold;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+/* Official horizontal charity: water logo. Keep proportions with height:auto. */
+.cw-logo {
+  display: block;
+  width: min(210px, 70%);
+  height: auto;
+  margin: 0 auto 14px;
 }
 
 h1 {
@@ -179,9 +194,27 @@ h1 {
   background: var(--dirty-brown);
 }
 
-.water-drop.golden {
-  background: radial-gradient(circle at 30% 30%, #fff6a8, var(--charity-yellow) 45%, #d99a00 100%);
-  box-shadow: 0 0 16px rgba(255, 201, 7, 0.9);
+.water-drop.jerry-can {
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  animation: popIn 0.2s ease, floatDrop 1.6s ease-in-out infinite alternate;
+}
+
+.water-drop.jerry-can::after {
+  display: none;
+}
+
+/* Jerry Can bonus image: fixed responsive width, original proportions. */
+.jerry-can-image {
+  display: block;
+  width: 54px;
+  height: auto;
+  pointer-events: none;
 }
 
 .water-drop:hover,
@@ -189,8 +222,17 @@ h1 {
   transform: rotate(-45deg) scale(1.12);
 }
 
+.water-drop.jerry-can:hover,
+.water-drop.jerry-can:focus {
+  transform: translateY(-3px) scale(1.08);
+}
+
 .water-drop:active {
   transform: rotate(-45deg) scale(0.9);
+}
+
+.water-drop.jerry-can:active {
+  transform: translateY(2px) scale(0.96);
 }
 
 .button-row {
@@ -408,6 +450,11 @@ h1 {
   .water-drop {
     width: 48px;
     height: 48px;
+  }
+
+  .jerry-can-image {
+    width: 44px;
+    height: auto;
   }
 
   .plant {

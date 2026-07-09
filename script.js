@@ -15,7 +15,7 @@ const MESSAGES = {
   start: "Click clean water drops!",
   ready: "Press Start to begin!",
   clean: "Great! Clean water helps the plant grow. +1",
-  golden: "Golden drop! +3",
+  jerryCan: "Jerry Can bonus! +3",
   dirty: "Dirty water! -1",
   combo: "Combo! Keep the clean water coming!",
   win: "You saved the plant!",
@@ -120,7 +120,16 @@ function createWaterDrop() {
 
   drop.classList.add("water-drop", dropType);
   drop.type = "button";
-  drop.setAttribute("aria-label", `${dropType} water drop`);
+  drop.setAttribute("aria-label", dropType === "jerry-can" ? "Jerry Can bonus" : `${dropType} water drop`);
+
+  // Jerry Can bonus uses the provided transparent image without recoloring or distortion.
+  if (dropType === "jerry-can") {
+    const jerryCanImage = document.createElement("img");
+    jerryCanImage.src = "png/water-can-transparent.png";
+    jerryCanImage.alt = "Jerry Can bonus";
+    jerryCanImage.classList.add("jerry-can-image");
+    drop.appendChild(jerryCanImage);
+  }
 
   // Keep drops inside the visible game area and away from the plant at the bottom.
   const dropSize = 52;
@@ -144,7 +153,7 @@ function chooseDropType() {
   const chance = Math.random();
 
   if (chance < 0.15) {
-    return "golden";
+    return "jerry-can";
   }
 
   if (chance < 0.42) {
@@ -163,10 +172,10 @@ function handleDropClick(drop, dropType) {
     score++;
     comboCount++;
     feedbackText.textContent = MESSAGES.clean;
-  } else if (dropType === "golden") {
+  } else if (dropType === "jerry-can") {
     score += 3;
     comboCount++;
-    feedbackText.textContent = MESSAGES.golden;
+    feedbackText.textContent = MESSAGES.jerryCan;
   } else {
     score = Math.max(0, score - 1);
     comboCount = 0;
